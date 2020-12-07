@@ -20,12 +20,12 @@ public class TestPayroll {
 
         switch (selection) {
           case 1:
-              //todo
+              ((FullTimePayslip)payslips[i]).volunteer();
             break;
           case 2:
             System.out.print("Enter amount to donate: RM ");
             double donation = scn.nextDouble();
-            //todo
+            ((FullTimePayslip)payslips[i]).donate(donation);
             break;
         }
       } 
@@ -51,7 +51,7 @@ public class TestPayroll {
       displayPayslips(payslipArr);
 
       //todo
-      System.out.println("\nTotal donation  : " );
-      System.out.println("Total volunteer : " );
+      System.out.println("\nTotal donation  : " + FullTimePayslip.getDonationFund());
+      System.out.println("Total volunteer : " +  FullTimePayslip.getVolunteerCount());
   }
 }
