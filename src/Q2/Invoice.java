@@ -45,7 +45,14 @@ public class Invoice {
         this.lines = lines;
         this.totalLines = lines.length;
     }
-
+    
+    public void addLine(InvoiceLine lines){
+        if (this.lines == null)
+            this.lines = new InvoiceLine[10];
+       
+        this.lines[totalLines++] = lines;
+    }
+    
     public static String getNextInvoiceNumber() {
         return "INV" + String.format("%04d",nextInvoiceNumber);
     }

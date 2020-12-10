@@ -1,5 +1,4 @@
 package Q2;
-
 import java.util.Scanner;
 
 public class ProcessInvoice {
@@ -8,12 +7,20 @@ public class ProcessInvoice {
   private Scanner scn = new Scanner(System.in);
   
   private void initializeProducts() {
-    //todo:: create sample products  
+     items = new Product[]{
+               new Product(1111, "Toaster", 90.00),
+               new Product(2222, "Television", 3000.00),
+               new Product(2222, "Air-conditioner", 1200.00)
+             };
     
   }
   
   private void initializeCustomers() {
-      //todo: create sample customers
+     customers = new Customer[]{
+                    new Customer ("C72635", "Big Sdn. Bhd.", new Address("23 Jalan D9", 42100, "Selangor")),
+                    new Customer ("C58751", "Tiger Sdn. Bhd.", new Address("25 Jalan 12", 5300, "Kuala Lumpur")),
+                    new Customer ("C12345", "TAR Sdn. Bhd.", new Address("1 Jalan 12", 5300, "Kuala Lumpur"))
+                 };
 
   }
   
@@ -31,6 +38,7 @@ public class ProcessInvoice {
   
   public void enterInvoiceLines(Invoice invoice) {
     char anymore = 'Y';
+ 
     do {
       System.out.println("\nProducts");
       
@@ -43,11 +51,15 @@ public class ProcessInvoice {
       System.out.print("Enter quantity: ");
       int quantity = scn.nextInt();
 
-      //todo:: add invoice line
+      InvoiceLine lines = new InvoiceLine(items[selection], quantity);
+      invoice.addLine(lines);
+      
       System.out.print("Anymore items (Y/N)? ");
       
       anymore = Character.toUpperCase(scn.next().charAt(0));
     } while (anymore == 'Y');
+    
+
   }
   
   
@@ -55,9 +67,8 @@ public class ProcessInvoice {
     System.out.println("\n\nProcess Sale");
     int customerIndex = selectCustomers();
     
-    //todo:: create new invoice
-  
-    //todo:: enter invoice lines
+    Invoice invoice = new Invoice(customers[customerIndex]);
+    enterInvoiceLines(invoice);
    
     return invoice;
   }
@@ -72,8 +83,22 @@ public class ProcessInvoice {
     System.out.printf("%-10s %-20s %-8s %-15s %-15s\n", "Product No", "Description", "Qty", "Unit Price(RM)", "Line Total(RM)");
   }
   
-  public static void generateInvoice(Invoice inv) {
-    //todo:: generate invoice
+ public static void generateInvoice(Invoice inv) {
+    System.out.printf("\n\n%40s\n", "INVOICE");
+    System.out.printf("%45s %-12s %s\n", " ", "Invoice No:", inv.getInvoiceNumber());
+    System.out.printf("%45s %-12s %s\n", " ", "Date:", inv.getFormattedDate());
+    System.out.printf("%-45s %-12s %s\n", "BILL TO: ", "Cust. ID: ", inv.getCustomer().getId());
+    System.out.println("\t" + inv.getCustomer().getName() + inv.getCustomer().getAddress());
+    drawLine();
+    displayHeader();
+    InvoiceLine[] lines = inv.getLines();
+    for (int i = 0; i < inv.getTotalLines(); ++i) {
+      Product item = lines[i].getProduct();
+      System.out.printf("%-10d %-21s %-8d %12.2f %15.2f\n", item.getNumber(), item.getDescription(),
+              lines[i].getQuantity(), lines[i].getPrice(), lines[i].getPrice());
+    }
+    drawLine();
+    System.out.printf("%-61s RM%-14.2f\n", "Grand Total: ", inv.getGrandTotal());
   }
 
   public ProcessInvoice() {
