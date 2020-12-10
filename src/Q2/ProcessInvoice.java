@@ -1,5 +1,6 @@
 package Q2;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class ProcessInvoice {
   private Product[] items;
@@ -84,6 +85,8 @@ public class ProcessInvoice {
   }
   
  public static void generateInvoice(Invoice inv) {
+   
+     
     System.out.printf("\n\n%40s\n", "INVOICE");
     System.out.printf("%45s %-12s %s\n", " ", "Invoice No:", inv.getInvoiceNumber());
     System.out.printf("%45s %-12s %s\n", " ", "Date:", inv.getFormattedDate());

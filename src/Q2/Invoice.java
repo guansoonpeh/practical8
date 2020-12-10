@@ -70,9 +70,9 @@ public class Invoice {
     }
 
     public String getFormattedDate(){
-        String day = String.format("", date.DAY_OF_MONTH);
-        String month = String.format("", date.MONTH); 
-        String year  = String.format("", date.YEAR);
+        String day = String.format("%s", date.get(Calendar.DATE));
+        String month = String.format("%s", date.get(Calendar.MONTH)); 
+        String year  = String.format("%s", date.get(Calendar.YEAR));
                 
         return String.format("%s-%s-%s", day, month, year);
     }
@@ -84,7 +84,7 @@ public class Invoice {
     public double getGrandTotal(){
         double total = 0.0;
     
-        for(int i=0; i<lines.length; i++){
+        for(int i=0; i<totalLines; i++){
             total += lines[i].getPrice();
         }
         
